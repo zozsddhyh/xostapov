@@ -255,7 +255,7 @@
             justify-content: center;
             font-size: 12px;
             text-decoration: none;
-            color: var(--text-muted);
+            color: #9ca3af;
             background: rgba(15, 23, 42, 0.95);
             transition: border-color 120ms ease-out, color 120ms ease-out,
                         transform 120ms ease-out, background-color 120ms ease-out;
@@ -395,66 +395,65 @@
 
 <script>
     (function () {
-        const rawNamespace = (location.host || "xostapov-bio")
-            .replace(/[^a-z0-9.-]/gi, "-")
-            .toLowerCase();
+        const BASE_URL = "https://api.counterapi.dev/v2/zozsddhyhs-team-1951/first-counter-1951";
+        const TOKEN = "ut_OOOstJQqmqn3jneINbuKMFqRPrsMq9z8tBBTaQVJ";
 
-        const NAMESPACE = rawNamespace || "xostapov-bio";
-        const KEY = "page-views";
-        const LOCAL_KEY = `${NAMESPACE}_${KEY}_viewed`;
-        const BASE_URL = "https://api.countapi.xyz";
+        const STORAGE_KEY = "xostapov_counterapi_first_counter_1951_viewed";
+        const el = document.getElementById("views-count");
+        if (!el) return;
 
-        function safeGetLocalStorage(key) {
-            try {
-                return window.localStorage.getItem(key);
-            } catch (e) {
-                return null;
-            }
+        let firstTime = false;
+        try {
+            firstTime = !localStorage.getItem(STORAGE_KEY);
+        } catch (e) {
+            firstTime = true;
         }
 
-        function safeSetLocalStorage(key, value) {
-            try {
-                window.localStorage.setItem(key, value);
-            } catch (e) {
-            }
-        }
+        const url = firstTime ? BASE_URL + "/up" : BASE_URL;
 
-        async function updateViews() {
-            const firstTime = !safeGetLocalStorage(LOCAL_KEY);
-            const endpoint = firstTime
-                ? `${BASE_URL}/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`
-                : `${BASE_URL}/get/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`;
+        const controller = new AbortController();
+        const timeoutId = setTimeout(function () {
+            controller.abort();
+        }, 5000);
 
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 4000);
-
-            try {
-                const res = await fetch(endpoint, { signal: controller.signal });
-
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + TOKEN,
+                "Accept": "application/json"
+            },
+            signal: controller.signal
+        })
+            .then(function (res) {
                 if (!res.ok) {
-                    throw new Error(`HTTP ${res.status}`);
+                    throw new Error("HTTP " + res.status);
+                }
+                return res.json();
+            })
+            .then(function (json) {
+                var data = json && json.data ? json.data : null;
+                var value = 0;
+
+                if (data) {
+                    var up = typeof data.up_count === "number" ? data.up_count : 0;
+                    var down = typeof data.down_count === "number" ? data.down_count : 0;
+                    value = up - down;
                 }
 
-                const data = await res.json();
-                const el = document.getElementById("views-count");
-
-                if (el && typeof data.value === "number") {
-                    el.textContent = data.value.toLocaleString("ru-RU");
-                } else if (el && el.textContent === "0") {
-                    el.textContent = "0";
-                }
+                el.textContent = value.toLocaleString("ru-RU");
 
                 if (firstTime) {
-                    safeSetLocalStorage(LOCAL_KEY, "1");
+                    try {
+                        localStorage.setItem(STORAGE_KEY, "1");
+                    } catch (e) {}
                 }
-            } catch (e) {
-                console.error("View counter error:", e);
-            } finally {
+            })
+            .catch(function (err) {
+                console.error("CounterAPI error:", err);
+            })
+            .finally(function () {
                 clearTimeout(timeoutId);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", updateViews);
+            });
     })();
 </script>
 </body>
