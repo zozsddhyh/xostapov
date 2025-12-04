@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>xostapov | Python developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Python / full‑stack developer xostapov — pet-проекты, GitHub, Telegram и контакты на одной странице.">
+    <meta name="keywords" content="xostapov, python, developer, backend, fullstack, portfolio">
+    <meta name="theme-color" content="#020617">
+    <meta property="og:title" content="xostapov | Python & full‑stack developer">
+    <meta property="og:description" content="Python backend, full‑stack, API и автоматизация для реальных задач.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zozsddhyh.github.io/xostapov">
+    <meta property="og:image" content="https://your-domain.example/og-image.png">
+
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #020617f2;
+            --accent: #6366f1;
+            --accent-soft: rgba(99, 102, 241, 0.15);
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border: #1f2937;
+            --radius-lg: 24px;
+            --radius-md: 999px;
+            --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.9);
+            --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            color-scheme: dark;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: var(--font-main);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            background: radial-gradient(circle at top, #020617 0, #000 55%, #020617 100%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -20%;
+            background: linear-gradient(135deg, #0f172a 0%, #111827 40%, #020617 100%);
+            opacity: 0.95;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: -35%;
+            background:
+                radial-gradient(circle at 0 0, rgba(99,102,241,0.26), transparent 50%),
+                radial-gradient(circle at 100% 0, rgba(236,72,153,0.14), transparent 50%);
+            opacity: 0.34;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            padding: 24px 22px 24px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(20px);
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 24px;
+            background: radial-gradient(circle at 30% 0%, #facc15 0, #f97316 35%, #ef4444 65%, #312e81 100%);
+            border: 2px solid rgba(15, 23, 42, 0.9);
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 22px;
+            color: rgba(15, 23, 42, 0.9);
+            text-shadow: 0 0 18px rgba(248, 250, 252, 0.9);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--accent);
+            background: var(--accent-soft);
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(79, 70, 229, 0.4);
+        }
+
+        .tag-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 4px 0 2px;
+            letter-spacing: 0;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .stack {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 12px 0 14px;
+        }
+
+        .chip {
+            font-size: 11px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.32);
+            color: #e5e7eb;
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .bio {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(148, 163, 184, 0.18);
+            margin-bottom: 14px;
+        }
+
+        .btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 13px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background-color: rgba(15, 23, 42, 0.95);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 120ms ease-out, transform 120ms ease-out,
+                        box-shadow 120ms ease-out, border-color 120ms ease-out;
+        }
+
+        .btn-link-main {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border-color: transparent;
+            box-shadow: 0 12px 32px rgba(79, 70, 229, 0.45);
+        }
+
+        .btn-link-main:hover {
+            background: linear-gradient(135deg, #818cf8, #4f46e5);
+            box-shadow: 0 16px 38px rgba(79, 70, 229, 0.55);
+        }
+
+        .btn-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.85);
+            border-color: rgba(129, 140, 248, 0.5);
+        }
+
+        .btn-label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .views {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .views-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: #6366f1;
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.7);
+        }
+
+        .views-count {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .socials {
+            display: flex;
+            gap: 6px;
+        }
+
+        .social {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            text-decoration: none;
+            color: var(--text-muted);
+            background: rgba(15, 23, 42, 0.95);
+            transition: border-color 120ms ease-out, color 120ms ease-out,
+                        transform 120ms ease-out, background-color 120ms ease-out;
+        }
+
+        .social:hover {
+            border-color: rgba(129, 140, 248, 0.9);
+            color: #e5e7eb;
+            transform: translateY(-0.5px);
+            background-color: rgba(15, 23, 42, 0.98);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                scroll-behavior: auto;
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .tag-dot,
+            .views-dot {
+                animation: soft-pulse 2.6s ease-in-out infinite;
+            }
+
+            @keyframes soft-pulse {
+                0%, 100% {
+                    box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+                }
+                50% {
+                    box-shadow: 0 0 14px rgba(34, 197, 94, 1);
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 10px;
+            }
+            .card {
+                padding: 20px 16px 18px;
+            }
+            .avatar {
+                width: 64px;
+                height: 64px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <main class="card" aria-label="Страница ссылок Python / full‑stack разработчика xostapov">
+        <header class="profile">
+            <div class="avatar">&lt;/&gt;</div>
+            <div class="tag">
+                <span class="tag-dot"></span>
+                <span>('engine.dll', '53 56 57 8B DA 8B F9 FF 15')</span>
+            </div>
+            <h1>xostapov</h1>
+            <div class="subtitle">Python / backend / full‑stack / automation</div>
+        </header>
+
+        <section aria-label="Tech stack и о себе">
+            <div class="stack" aria-label="Tech stack">
+                <span class="chip">Python</span>
+                <span class="chip">FastAPI</span>
+                <span class="chip">Django</span>
+                <span class="chip">PostgreSQL</span>
+                <span class="chip">Docker</span>
+                <span class="chip">AsyncIO</span>
+                <span class="chip">Full‑stack</span>
+            </div>
+
+            <p class="bio">
+                Пишу аккуратный backend и full‑stack на Python, делаю API и автоматизацию для реальных задач.
+            </p>
+        </section>
+
+        <h2 class="sr-only">Основные ссылки</h2>
+        <nav class="links" aria-label="Main links">
+            <a href="https://github.com/xostapov"
+               class="btn-link btn-link-main"
+               target="_blank"
+               rel="noreferrer"
+               aria-label="Открыть GitHub профиль xostapov">
+                <span>GitHub</span>
+                <span class="btn-label">/xostapov</span>
+            </a>
+
+            <a href="https://t.me/xostapov"
+               class="btn-link"
+               target="_blank"
+               rel="noreferrer"
+               aria-label="Открыть Telegram xostapov">
+                <span>Telegram</span>
+                <span class="btn-label">@xostapov</span>
+            </a>
+        </nav>
+
+        <footer class="meta-row">
+            <div class="views" aria-label="Просмотры страницы" aria-live="polite">
+                <span class="views-dot"></span>
+                <span>просмотров: <span id="views-count" class="views-count">0</span></span>
+            </div>
+
+            <div class="socials" aria-label="Социальные ссылки">
+                <a class="social"
+                   href="https://github.com/xostapov"
+                   target="_blank"
+                   rel="noreferrer"
+                   aria-label="GitHub xostapov">GH</a>
+                <a class="social"
+                   href="https://t.me/xostapov"
+                   target="_blank"
+                   rel="noreferrer"
+                   aria-label="Telegram xostapov">TG</a>
+            </div>
+        </footer>
+    </main>
+</div>
+
+<script>
+    (function () {
+        const rawNamespace = (location.host || "xostapov-bio")
+            .replace(/[^a-z0-9.-]/gi, "-")
+            .toLowerCase();
+
+        const NAMESPACE = rawNamespace || "xostapov-bio";
+        const KEY = "page-views";
+        const LOCAL_KEY = `${NAMESPACE}_${KEY}_viewed`;
+        const BASE_URL = "https://api.countapi.xyz";
+
+        function safeGetLocalStorage(key) {
+            try {
+                return window.localStorage.getItem(key);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function safeSetLocalStorage(key, value) {
+            try {
+                window.localStorage.setItem(key, value);
+            } catch (e) {
+            }
+        }
+
+        async function updateViews() {
+            const firstTime = !safeGetLocalStorage(LOCAL_KEY);
+            const endpoint = firstTime
+                ? `${BASE_URL}/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`
+                : `${BASE_URL}/get/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`;
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+            try {
+                const res = await fetch(endpoint, { signal: controller.signal });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+
+                const data = await res.json();
+                const el = document.getElementById("views-count");
+
+                if (el && typeof data.value === "number") {
+                    el.textContent = data.value.toLocaleString("ru-RU");
+                } else if (el && el.textContent === "0") {
+                    el.textContent = "0";
+                }
+
+                if (firstTime) {
+                    safeSetLocalStorage(LOCAL_KEY, "1");
+                }
+            } catch (e) {
+                console.error("View counter error:", e);
+            } finally {
+                clearTimeout(timeoutId);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", updateViews);
+    })();
+</script>
+</body>
+</html>
